@@ -10,18 +10,13 @@ variable repository_base_path {
   default     = ""
 }
 
-locals {
-  multi_module_repo_apply_on_master_description = "`track` triggers a `terraform plan` with along with the possibility to confirm the plan on the infrastructure."
-}
 output multi_module_repo_apply_on_master {
-  description = local.multi_module_repo_apply_on_master_description
+  description = "`track` triggers a `terraform plan` with along with the possibility to confirm the plan on the infrastructure."
   # XXX: incorporate `project_root` here.
   default = {
     policy      = <<EOF
 package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
-# DESCRIPTION:
-# ${local.multi_module_repo_apply_on_master_description}
 track {
     # only do this on the ${var.default_git_branch} branch
     input.push.branch == ${var.default_git_branch}
@@ -34,17 +29,12 @@ EOF
   }
 }
 
-locals {
-  multi_module_repo_plan_on_branch_description = "`propose` will run a `terraform plan` without the possiblity of confirm it with a `terraform apply` afterwards."
-}
 output multi_module_repo_plan_on_branch {
-  description = local.multi_module_repo_plan_on_branch_description
+  description = "`propose` will run a `terraform plan` without the possiblity of confirm it with a `terraform apply` afterwards."
   default = {
     policy      = <<EOF
 package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
-# DESCRIPTION:
-# ${local.multi_module_repo_plan_on_branch_description}
 propose {
     # we want to do this on all branches except of ${var.default_git_branch} 
     input.push.branch != ${var.default_git_branch}
