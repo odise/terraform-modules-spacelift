@@ -7,6 +7,7 @@ variable gcp_project_name {
 module example_stack {
   source = "../../modules/gcp-stack"
 
+  stack_name       = "GCP Test Stack"
   gcp_project_name = var.gcp_project_name
   spacelift_sa_iam_roles = [
     # "role/owner"

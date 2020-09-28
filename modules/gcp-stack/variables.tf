@@ -50,3 +50,11 @@ variable spacelift_token_scope {
     "https://www.googleapis.com/auth/userinfo.email",
   ]
 }
+
+variable spacelift_policies {
+  type = map(object({
+    policy      = string
+    policy_type = string
+  }))
+  default = null
+}
