@@ -38,7 +38,7 @@ package spacelift
 propose {
     # we want to do this on all branches except of ${var.default_git_branch} 
     input.push.branch != ${var.default_git_branch}
-    # we want to do this on an specific path of our multi-module repository. In this case this is ${var.repository_base_branch}.
+    # we want to do this on an specific path of our multi-module repository. In this case this is ${var.repository_base_path}.
     filepath := input.push.affected_files[_]
     startswith(filepath, "${var.repository_base_path}")
 EOF
