@@ -20,7 +20,7 @@ package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
 track {
     # only do this on the ${var.default_git_branch} branch
-    input.push.branch == ${var.default_git_branch}
+    input.push.branch == "${var.default_git_branch}"
     # only trigger it on the relevant path of our multi-module repository
     filepath := input.push.affected_files[_]
     startswith(filepath, "${var.repository_base_path}")
@@ -38,7 +38,7 @@ package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
 propose {
     # we want to do this on all branches except of ${var.default_git_branch} 
-    input.push.branch != ${var.default_git_branch}
+    input.push.branch != "${var.default_git_branch}"
     # we want to do this on an specific path of our multi-module repository. In this case this is ${var.repository_base_path}.
     filepath := input.push.affected_files[_]
     startswith(filepath, "${var.repository_base_path}")
