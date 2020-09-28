@@ -59,5 +59,5 @@ variable spacelift_policies {
     policy      = string
     policy_type = string
   }))
-  default = null
+  default = {}
 }
