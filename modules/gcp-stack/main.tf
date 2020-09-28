@@ -21,14 +21,14 @@ resource spacelift_stack this {
 
 resource spacelift_stack_gcp_service_account this {
   stack_id     = spacelift_stack.this.id
-  token_scopes = var.token_scope
+  token_scopes = var.spacelift_token_scopes
 }
 
 resource spacelift_policy this {
-  for_each = toset(var.spacelift_policies)
+  for_each = var.spacelift_policies
   name     = each.key
   body     = each.value.policy
-  type     = each.value.policy_type
+  type     = each.value.policy
 }
 
 resource spacelift_policy_attachment this {
