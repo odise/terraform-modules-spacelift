@@ -14,9 +14,8 @@ output multi_module_repo_apply_on_master {
   description = "`track` triggers a `terraform plan` with along with the possibility to confirm the plan on the infrastructure."
   # XXX: incorporate `project_root` here.
   value = {
-    multi_module_repo_apply_on_master = {
-      policy_type = "GIT_PUSH"
-      policy      = <<EOF
+    policy_type = "GIT_PUSH"
+    policy      = <<EOF
 package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
 track {
@@ -27,16 +26,14 @@ track {
     startswith(filepath, "${var.repository_base_path}")
 }
 EOF
-    }
   }
 }
 
 output multi_module_repo_plan_on_branch {
   description = "`propose` will run a `terraform plan` without the possiblity of confirm it with a `terraform apply` afterwards."
   value = {
-    multi_module_repo_plan_on_branch = {
-      policy_type = "GIT_PUSH"
-      policy      = <<EOF
+    policy_type = "GIT_PUSH"
+    policy      = <<EOF
 package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
 propose {
@@ -46,6 +43,5 @@ propose {
     filepath := input.push.affected_files[_]
     startswith(filepath, "${var.repository_base_path}")
 EOF
-    }
   }
 }

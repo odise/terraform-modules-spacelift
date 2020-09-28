@@ -4,16 +4,26 @@ variable gcp_project_name {
   description = "GCP project name"
 }
 
+variable name {
+  type    = string
+  default = "GCP Test Stack"
+}
+
+variable main_branch {
+  type    = string
+  default = "master"
+}
+
 module policies {
   source               = "../../modules/policies"
   repository_base_path = "stacks/gcp-stack"
-  default_git_branch   = "master"
+  default_git_branch   = var.main_branch
 }
 
 module example_stack {
   source = "../../modules/gcp-stack"
 
-  stack_name       = "GCP Test Stack"
+  stack_name       = var.name
   gcp_project_name = var.gcp_project_name
   spacelift_sa_iam_roles = [
     # "role/owner"
@@ -28,8 +38,8 @@ module example_stack {
   # stack_terraform_version = 
   # spacelift_token_scope = 
 
-  spacelift_policies = merge(
-    module.policies.multi_module_repo_plan_on_branch,
-    module.policies.multi_module_repo_apply_on_master
-  )
+  spacelift_policies = {
+    "${var.name} terraform plan on every branch"             = module.policies.multi_module_repo_plan_on_branch,
+    "${var.name} terraform apply on ${var.main_branch} only" = module.policies.multi_module_repo_apply_on_master
+  }
 }
