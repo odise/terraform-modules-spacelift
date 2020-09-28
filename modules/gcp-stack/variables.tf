@@ -8,6 +8,9 @@ variable spacelift_sa_iam_roles {
   default = []
 }
 
+variable stack_name {
+  type = string
+}
 variable stack_administrative {
   type    = bool
   default = false
