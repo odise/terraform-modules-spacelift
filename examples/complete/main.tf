@@ -44,6 +44,9 @@ module example_stack {
   }
 
   spacelift_stack_environment_variables = {
-    TF_VAR_gcp_project_name = var.gcp_project_name
+    TF_VAR_gcp_project_name = {
+      value      = var.gcp_project_name
+      write_only = true
+    }
   }
 }
