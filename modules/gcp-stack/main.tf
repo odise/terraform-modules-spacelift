@@ -32,6 +32,6 @@ resource spacelift_policy this {
 }
 
 resource spacelift_policy_attachment this {
-  policy_id = spacelift_policy.this.id
+  policy_id = spacelift_policy.this[each.key].id
   stack_id  = spacelift_stack.this.id
 }

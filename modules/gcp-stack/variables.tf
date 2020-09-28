@@ -43,7 +43,7 @@ variable stack_terraform_version {
   default = "0.13.0"
 }
 
-variable spacelift_token_scope {
+variable spacelift_token_scopes {
   type = list
   default = [
     "https://www.googleapis.com/auth/compute",
