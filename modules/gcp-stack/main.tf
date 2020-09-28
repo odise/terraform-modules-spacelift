@@ -28,7 +28,7 @@ resource spacelift_policy this {
   for_each = var.spacelift_policies
   name     = each.key
   body     = each.value.policy
-  type     = each.value.policy
+  type     = each.value.policy_type
 }
 
 resource spacelift_policy_attachment this {
