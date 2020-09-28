@@ -13,7 +13,7 @@ variable repository_base_path {
 output multi_module_repo_apply_on_master {
   description = "`track` triggers a `terraform plan` with along with the possibility to confirm the plan on the infrastructure."
   # XXX: incorporate `project_root` here.
-  default = {
+  value = {
     policy      = <<EOF
 package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
@@ -31,7 +31,7 @@ EOF
 
 output multi_module_repo_plan_on_branch {
   description = "`propose` will run a `terraform plan` without the possiblity of confirm it with a `terraform apply` afterwards."
-  default = {
+  value = {
     policy      = <<EOF
 package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
