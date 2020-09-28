@@ -36,3 +36,11 @@ resource spacelift_policy_attachment this {
   policy_id = spacelift_policy.this[each.key].id
   stack_id  = spacelift_stack.this.id
 }
+
+resource spacelift_environment_variable this {
+  for_each   = var.spacelift_stack_environment_variables
+  stack_id   = spacelift_stack.this.id
+  name       = each.key
+  value      = each.value.value
+  write_only = each.value.write_only
+}

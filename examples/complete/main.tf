@@ -42,4 +42,8 @@ module example_stack {
     "${var.name} terraform plan on every branch"             = module.policies.multi_module_repo_plan_on_branch,
     "${var.name} terraform apply on ${var.main_branch} only" = module.policies.multi_module_repo_apply_on_master
   }
+
+  spacelift_stack_environment_variables = {
+    TF_VAR_gcp_project_name = var.gcp_project_name
+  }
 }

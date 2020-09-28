@@ -61,3 +61,11 @@ variable spacelift_policies {
   }))
   default = {}
 }
+
+variable spacelift_stack_environment_variables {
+  type = map(object({
+    value      = string
+    write_only = string
+  }))
+  default = {}
+}
