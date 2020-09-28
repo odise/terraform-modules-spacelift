@@ -1,11 +1,13 @@
-variable git_branch {
+variable default_git_branch {
   description = "The branch of the GIT repository e.g. `master` or `development`."
   type        = string
+  default     = "master"
 }
 
 variable repository_base_path {
   description = "The path to the stack inside the GIT repository."
   type        = string
+  default     = ""
 }
 
 locals {
@@ -21,11 +23,11 @@ package spacelift
 # DESCRIPTION:
 # ${local.multi_module_repo_apply_on_master_description}
 track {
-    # only do this on the ${var.git_branch}  branch
-    input.push.branch == ${var.git_branch}
+    # only do this on the ${var.default_git_branch} branch
+    input.push.branch == ${var.default_git_branch}
     # only trigger it on the relevant path of our multi-module repository
     filepath := input.push.affected_files[_]
-    startswith(filepath, "${var.repository_base_branch}")
+    startswith(filepath, "${var.repository_base_path}")
 }
 EOF
     policy_type = "GIT_PUSH"
@@ -44,11 +46,11 @@ package spacelift
 # DESCRIPTION:
 # ${local.multi_module_repo_plan_on_branch_description}
 propose {
-    # we want to do this on all branches except of ${var.git_branch} 
-    input.push.branch == ${var.git_branch}
+    # we want to do this on all branches except of ${var.default_git_branch} 
+    input.push.branch != ${var.default_git_branch}
     # we want to do this on an specific path of our multi-module repository. In this case this is ${var.repository_base_branch}.
     filepath := input.push.affected_files[_]
-    startswith(filepath, "${var.repository_base_branch}")
+    startswith(filepath, "${var.repository_base_path}")
 EOF
     policy_type = "GIT_PUSH"
   }

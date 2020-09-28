@@ -4,6 +4,12 @@ variable gcp_project_name {
   description = "GCP project name"
 }
 
+module policies {
+  source               = "../../modules/policies"
+  repository_base_path = "stacks/gcp-stack"
+  default_git_branch   = "master"
+}
+
 module example_stack {
   source = "../../modules/gcp-stack"
 
@@ -21,4 +27,9 @@ module example_stack {
   stack_base_dev_path  = "stacks/gcp-stack"
   # stack_terraform_version = 
   # spacelift_token_scope = 
+
+  spacelift_policies = merge(
+    module.policies.multi_module_repo_plan_on_branch,
+    module.policies.multi_module_repo_apply_on_master
+  )
 }

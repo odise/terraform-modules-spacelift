@@ -1,6 +1,6 @@
 provider "spacelift" {}
 
-resource google_project_iam_member base_dev {
+resource google_project_iam_member this {
   for_each = toset(var.spacelift_sa_iam_roles)
   project  = var.gcp_project_name
   role     = each.key
