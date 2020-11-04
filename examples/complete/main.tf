@@ -26,7 +26,7 @@ module example_stack {
   stack_name       = var.name
   gcp_project_name = var.gcp_project_name
   spacelift_sa_iam_roles = [
-    "roles/compute.securityAdmin"
+    "roles/storage.admin"
   ]
   stack_administrative = false
   stack_autodeploy     = false

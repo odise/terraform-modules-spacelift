@@ -23,14 +23,14 @@ jobs:
         run: |
           changes=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }})
           echo -e "\nINFO: Running on: \n$changes\n"
-          for i in $( git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }} | grep "tf$"| sed -E 's|/[^/]+$||' |sort |uniq | grep "^modules");
+          for i in $( git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }} | grep "tf$"| sed -E 's|/[^/]+$||' |sort |uniq | grep "^examples");
           do
             cd $i
-            echo -e "INFO: running terraform init for effected module $i\n"
+            echo -e "INFO: running terraform init for effected example $i\n"
             terraform init -backend=false -no-color | \
             tee init.log |\
             grep -E '^Initializing|^\* provider'
-            echo -e "\nINFO: running terraform validate for effected module $i\n"
+            echo -e "\nINFO: running terraform validate for effected example $i\n"
             # terraform validate -no-color || exit 1
             terraform validate -no-color
             cd $GITHUB_WORKSPACE
