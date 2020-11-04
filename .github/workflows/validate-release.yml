@@ -17,24 +17,7 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check -recursive -diff=true stacks
-        continue-on-error: true
-      - name: Terraform validate
-        id: validate
-        run: |
-          changes=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }})
-          echo -e "\nINFO: Running on: \n$changes\n"
-          for i in $( git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }} | grep "tf$"| sed -E 's|/[^/]+$||' |sort |uniq | grep "^examples");
-          do
-            cd $i
-            echo -e "INFO: running terraform init for effected example $i\n"
-            terraform init -backend=false -no-color | \
-            tee init.log |\
-            grep -E '^Initializing|^\* provider'
-            echo -e "\nINFO: running terraform validate for effected example $i\n"
-            # terraform validate -no-color || exit 1
-            terraform validate -no-color
-            cd $GITHUB_WORKSPACE
-          done
+        # continue-on-error: true
 
   release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
