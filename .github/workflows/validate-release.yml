@@ -1,0 +1,50 @@
+name: Validate & Release
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  check:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check -recursive -diff=true stacks
+        continue-on-error: true
+      - name: Terraform validate
+        id: validate
+        run: |
+          changes=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }})
+          echo -e "\nINFO: Running on: \n$changes\n"
+          for i in $( git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }} | grep "tf$"| sed -E 's|/[^/]+$||' |sort |uniq | grep "^modules");
+          do
+            cd $i
+            echo -e "INFO: running terraform init for effected module $i\n"
+            terraform init -backend=false -no-color | \
+            tee init.log |\
+            grep -E '^Initializing|^\* provider'
+            echo -e "\nINFO: running terraform validate for effected module $i\n"
+            # terraform validate -no-color || exit 1
+            terraform validate -no-color
+            cd $GITHUB_WORKSPACE
+          done
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      # semver version tag
+      - name: Bump version and push tag
+        id: semver
+        uses: mathieudutour/github-tag-action@v4.6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          release_branches: "master"
