@@ -4,7 +4,7 @@ resource google_project_iam_member this {
   for_each = toset(var.spacelift_sa_iam_roles)
   project  = var.gcp_project_name
   role     = each.key
-  member   = "serviceAccount:${spacelift_stack_gcp_service_account.this.service_account_email}"
+  member   = "serviceAccount:${spacelift_gcp_service_account.this.service_account_email}"
 }
 
 resource spacelift_stack this {
@@ -19,7 +19,7 @@ resource spacelift_stack this {
   terraform_version = var.stack_terraform_version
 }
 
-resource spacelift_stack_gcp_service_account this {
+resource spacelift_gcp_service_account this {
   stack_id     = spacelift_stack.this.id
   token_scopes = var.spacelift_token_scopes
 }
