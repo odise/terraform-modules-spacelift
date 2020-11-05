@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - master
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: master
+
+    - name: Generate TF Docs
+      uses: Dirrk/terraform-docs@v1.0.8
+      with:
+        tf_docs_output_file: README.md
+        tf_docs_find_dir: modules
+        tf_docs_git_push: 'true'
