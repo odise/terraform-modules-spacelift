@@ -20,6 +20,15 @@ module policies {
   default_git_branch   = var.main_branch
 }
 
+module slack_policy {
+  source                        = "../../modules/policies"
+  general_channel_access_policy = <<EOF
+write {
+  input.slack.channel.name = "Spacelift notifications"
+}
+EOF
+}
+
 module example_stack {
   source = "../../modules/gcp-stack"
 

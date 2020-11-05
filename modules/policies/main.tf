@@ -46,3 +46,19 @@ propose {
 EOF
   }
 }
+
+variable "general_channel_access_policy" {
+  description = "The general Spacelift stack access policy as described here: https://docs.spacelift.io/concepts/policy/stack-access-policy. `package` information is already set."
+  default     = ""
+}
+
+output general_channel_access_policy {
+  description = "This is a general Spacelift stack access policy as described here: https://docs.spacelift.io/concepts/policy/stack-access-policy"
+  value = {
+    policy_type = "STACK_ACCESS"
+    policy      = <<EOF
+package spacelift
+${var.general_channel_access_policy}
+EOF
+  }
+}
