@@ -50,6 +50,7 @@ module example_stack {
   spacelift_policies = {
     "${var.name} terraform plan on every branch"             = module.policies.multi_module_repo_plan_on_branch,
     "${var.name} terraform apply on ${var.main_branch} only" = module.policies.multi_module_repo_apply_on_master
+    "${var.name} slack access plolicy"                       = module.slack_policy.general_channel_access_policy
   }
 
   spacelift_stack_environment_variables = {
