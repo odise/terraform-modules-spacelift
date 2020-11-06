@@ -8,6 +8,15 @@ terraform {
   }
 }
 
+data spacelift_stack self {
+  count    = length(var.stack_id) > 0 ? 1 : 0
+  stack_id = var.stack_id
+}
+
+locals {
+  stack_id = length(var.stack_id) > 0 ? data.spacelift_stack.self.stack_id : spacelift_stack.this.id
+}
+
 resource google_project_iam_member this {
   for_each = toset(var.spacelift_sa_iam_roles)
   project  = var.gcp_project_name
@@ -28,7 +37,7 @@ resource spacelift_stack this {
 }
 
 resource spacelift_gcp_service_account this {
-  stack_id     = spacelift_stack.this.id
+  stack_id     = local.stack_id
   token_scopes = var.spacelift_token_scopes
 }
 
@@ -42,18 +51,18 @@ resource spacelift_policy this {
 resource spacelift_policy_attachment this {
   for_each  = var.spacelift_policies
   policy_id = spacelift_policy.this[each.key].id
-  stack_id  = spacelift_stack.this.id
+  stack_id  = local.stack_id
 }
 
 resource spacelift_policy_attachment external {
   count     = length(var.spacelift_policies_objects)
   policy_id = var.spacelift_policies_objects[count.index]
-  stack_id  = spacelift_stack.this.id
+  stack_id  = local.stack_id
 }
 
 resource spacelift_environment_variable this {
   for_each   = var.spacelift_stack_environment_variables
-  stack_id   = spacelift_stack.this.id
+  stack_id   = local.stack_id
   name       = each.key
   value      = each.value.value
   write_only = each.value.write_only
