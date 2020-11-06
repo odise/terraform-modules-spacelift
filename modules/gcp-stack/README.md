@@ -15,7 +15,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| gcp\_project\_name | GCP project name | `string` | n/a | yes |
+| gcp\_project\_name | GCP project name | `string` | `""` | no |
 | spacelift\_policies | n/a | <pre>map(object({<br>    policy      = string<br>    policy_type = string<br>  }))</pre> | `{}` | no |
 | spacelift\_policies\_objects | n/a | `any` | `null` | no |
 | spacelift\_sa\_iam\_roles | n/a | `list` | `[]` | no |
@@ -28,8 +28,8 @@ No requirements.
 | stack\_description | n/a | `string` | `""` | no |
 | stack\_id | Provide a stack Id instead of creating a stack. | `string` | `""` | no |
 | stack\_manage\_state | n/a | `bool` | `false` | no |
-| stack\_name | n/a | `string` | n/a | yes |
-| stack\_repository | n/a | `string` | n/a | yes |
+| stack\_name | n/a | `string` | `""` | no |
+| stack\_repository | n/a | `string` | `""` | no |
 | stack\_terraform\_version | n/a | `string` | `"0.13.0"` | no |
 
 ## Outputs
