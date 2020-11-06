@@ -63,7 +63,6 @@ variable spacelift_policies {
 }
 variable "spacelift_policies_objects" {
   default = null
-  type    = set
 }
 
 variable spacelift_stack_environment_variables {
