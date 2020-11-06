@@ -22,8 +22,9 @@ module policies {
 }
 
 module slack_policy {
-  source                        = "../../modules/policies"
-  general_channel_access_policy = <<EOF
+  source                             = "../../modules/policies"
+  general_channel_access_policy_name = "Slack policy"
+  general_channel_access_policy      = <<EOF
 write {
   input.slack.channel.name = "Spacelift notifications"
 }
@@ -31,11 +32,11 @@ EOF
 }
 
 # this is a global policy that can be attached to multiple stacks
-resource spacelift_policy global_policy {
-  name = "Slack policy"
-  body = module.slack_policy.general_channel_access_policy.policy
-  type = module.slack_policy.general_channel_access_policy.policy_type
-}
+#resource spacelift_policy global_policy {
+#  name = "Slack policy"
+#  body = module.slack_policy.general_channel_access_policy.policy
+#  type = module.slack_policy.general_channel_access_policy.policy_type
+#}
 
 module example_stack {
   source = "../../modules/gcp-stack"
@@ -62,7 +63,7 @@ module example_stack {
   }
   # this is a global policy that can be attached on multiple stacks
   spacelift_policies_objects = (
-    spacelift_policy.global_policy.id
+    module.slack_policy.general_channel_access_policy_id
   )
 
   spacelift_stack_environment_variables = {
