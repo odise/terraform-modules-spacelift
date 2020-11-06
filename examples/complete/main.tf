@@ -62,7 +62,7 @@ module example_stack {
   }
   # this is a global policy that can be attached on multiple stacks
   spacelift_policies_objects = [
-    module.slack_policy.general_channel_access_policy
+    spacelift_policy.global_policy.id
   ]
 
   spacelift_stack_environment_variables = {
