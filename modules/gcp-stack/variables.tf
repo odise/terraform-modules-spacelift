@@ -1,6 +1,7 @@
 variable gcp_project_name {
   type        = string
   description = "GCP project name"
+  default     = ""
 }
 
 variable stack_id {
@@ -15,7 +16,8 @@ variable spacelift_sa_iam_roles {
 }
 
 variable stack_name {
-  type = string
+  type    = string
+  default = ""
 }
 variable stack_administrative {
   type    = bool
@@ -34,7 +36,8 @@ variable stack_description {
   default = ""
 }
 variable stack_repository {
-  type = string
+  type    = string
+  default = ""
 }
 variable stack_manage_state {
   type    = bool
