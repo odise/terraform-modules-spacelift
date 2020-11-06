@@ -3,6 +3,12 @@ variable gcp_project_name {
   description = "GCP project name"
 }
 
+variable stack_id {
+  type        = string
+  default     = ""
+  description = "Provide a stack Id instead of creating a stack."
+}
+
 variable spacelift_sa_iam_roles {
   type    = list
   default = []
