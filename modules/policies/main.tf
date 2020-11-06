@@ -10,14 +10,15 @@ variable repository_base_path {
   default     = ""
 }
 
-output multi_module_repo_apply_on_master {
-  description = "`track` triggers a `terraform plan` with along with the possibility to confirm the plan on the infrastructure."
-  # XXX: incorporate `project_root` here.
-  value = {
+
+locals {
+  multi_module_repo_apply_on_master = {
+    # XXX: incorporate `project_root` here.
     policy_type = "GIT_PUSH"
     policy      = <<EOF
 package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
+# Reference: multi_module_repo_apply_on_master
 track {
     # only do this on the ${var.default_git_branch} branch
     input.push.branch == "${var.default_git_branch}"
@@ -27,17 +28,15 @@ track {
 }
 EOF
   }
-}
 
-output multi_module_repo_plan_on_branch {
-  description = "`propose` will run a `terraform plan` without the possiblity of confirm it with a `terraform apply` afterwards."
-  value = {
+  multi_module_repo_plan_on_branch = {
     policy_type = "GIT_PUSH"
     policy      = <<EOF
 package spacelift
 # ATTENTION: This is generated policy deloyed with Terraform.
+# Reference: multi_module_repo_plan_on_branch
 propose {
-    # we want to do this on all branches except of ${var.default_git_branch} 
+    # we want to do this on all branches except of ${var.default_git_branch}
     input.push.branch != "${var.default_git_branch}"
     # we want to do this on an specific path of our multi-module repository. In this case this is ${var.repository_base_path}.
     filepath := input.push.affected_files[_]
@@ -47,18 +46,12 @@ EOF
   }
 }
 
-variable "general_channel_access_policy" {
-  description = "The general Spacelift stack access policy as described here: https://docs.spacelift.io/concepts/policy/stack-access-policy. `package` information is already set."
-  default     = ""
+output multi_module_repo_apply_on_master {
+  description = "`track` triggers a `terraform plan` with along with the possibility to confirm the plan on the infrastructure."
+  value       = local.multi_module_repo_apply_on_master
+}
+output multi_module_repo_plan_on_branch {
+  description = "`propose` will run a `terraform plan` without the possiblity of confirm it with a `terraform apply` afterwards."
+  value       = local.multi_module_repo_plan_on_branch
 }
 
-output general_channel_access_policy {
-  description = "This is a general Spacelift stack access policy as described here: https://docs.spacelift.io/concepts/policy/stack-access-policy"
-  value = {
-    policy_type = "STACK_ACCESS"
-    policy      = <<EOF
-package spacelift
-${var.general_channel_access_policy}
-EOF
-  }
-}

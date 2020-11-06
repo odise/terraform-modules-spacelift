@@ -1,5 +1,13 @@
 provider "spacelift" {}
 
+terraform {
+  required_providers {
+    spacelift = {
+      source = "spacelift.io/spacelift-io/spacelift"
+    }
+  }
+}
+
 resource google_project_iam_member this {
   for_each = toset(var.spacelift_sa_iam_roles)
   project  = var.gcp_project_name
@@ -34,6 +42,12 @@ resource spacelift_policy this {
 resource spacelift_policy_attachment this {
   for_each  = var.spacelift_policies
   policy_id = spacelift_policy.this[each.key].id
+  stack_id  = spacelift_stack.this.id
+}
+
+resource spacelift_policy_attachment external {
+  count     = length(var.spacelift_policies_objects)
+  policy_id = var.spacelift_policies_objects[count.index]
   stack_id  = spacelift_stack.this.id
 }
 
