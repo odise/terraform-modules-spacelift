@@ -26,6 +26,7 @@ No requirements.
 | stack\_base\_dev\_path | n/a | `string` | `"/"` | no |
 | stack\_branch | n/a | `string` | `"master"` | no |
 | stack\_description | n/a | `string` | `""` | no |
+| stack\_id | Provide a stack Id instead of creating a stack. | `string` | `""` | no |
 | stack\_manage\_state | n/a | `bool` | `false` | no |
 | stack\_name | n/a | `string` | n/a | yes |
 | stack\_repository | n/a | `string` | n/a | yes |
