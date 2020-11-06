@@ -61,6 +61,10 @@ variable spacelift_policies {
   }))
   default = {}
 }
+variable "spacelift_policies_objects" {
+  default = []
+  type    = list
+}
 
 variable spacelift_stack_environment_variables {
   type = map(object({

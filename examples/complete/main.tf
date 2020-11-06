@@ -14,6 +14,7 @@ variable main_branch {
   default = "master"
 }
 
+# policy module can be used multiple times for different purposes
 module policies {
   source               = "../../modules/policies"
   repository_base_path = "stacks/gcp-stack"
@@ -27,6 +28,13 @@ write {
   input.slack.channel.name = "Spacelift notifications"
 }
 EOF
+}
+
+# this is a global policy that can be attached to multiple stacks
+resource spacelift_policy global_policy {
+  name = "Slack policy"
+  body = module.slack_policy.general_channel_access_policy.policy
+  type = module.slack_policy.general_channel_access_policy.policy_type
 }
 
 module example_stack {
@@ -47,11 +55,15 @@ module example_stack {
   # stack_terraform_version = 
   # spacelift_token_scope = 
 
+  # these policies will be created on a per stack base and is exclusively used
   spacelift_policies = {
     "${var.name} terraform plan on every branch"             = module.policies.multi_module_repo_plan_on_branch,
     "${var.name} terraform apply on ${var.main_branch} only" = module.policies.multi_module_repo_apply_on_master
-    "${var.name} slack access plolicy"                       = module.slack_policy.general_channel_access_policy
   }
+  # this is a global policy that can be attached on multiple stacks
+  spacelift_policies_objects = [
+    module.slack_policy.general_channel_access_policy
+  ]
 
   spacelift_stack_environment_variables = {
     TF_VAR_gcp_project_name = {
