@@ -38,7 +38,7 @@ resource spacelift_policy_attachment this {
 }
 
 resource spacelift_policy_attachment external {
-  for_each  = var.spacelift_policies_objects
+  for_each  = toset(var.spacelift_policies_objects)
   policy_id = each.key
   stack_id  = spacelift_stack.this.id
 }
