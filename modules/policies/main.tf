@@ -91,5 +91,5 @@ output general_channel_access_policy {
   value       = local.general_channel_access_policy
 }
 output general_channel_access_policy_id {
-  value = spacelift_policy.general_channel_access_policy.id
+  value = length(var.general_channel_access_policy_name) > 0 ? spacelift_policy.general_channel_access_policy[0].id : ""
 }
