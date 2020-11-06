@@ -14,17 +14,18 @@ data spacelift_stack self {
 }
 
 locals {
-  stack_id = length(var.stack_id) > 0 ? data.spacelift_stack.self[0].stack_id : spacelift_stack.this.id
+  stack_id = length(var.stack_id) > 0 ? data.spacelift_stack.self[0].stack_id : spacelift_stack.this[0].id
 }
 
 resource google_project_iam_member this {
   for_each = toset(var.spacelift_sa_iam_roles)
   project  = var.gcp_project_name
   role     = each.key
-  member   = "serviceAccount:${spacelift_gcp_service_account.this.service_account_email}"
+  member   = "serviceAccount:${spacelift_gcp_service_account.this[0].service_account_email}"
 }
 
 resource spacelift_stack this {
+  count             = length(var.stack_id) > 0 ? 0 : 1
   name              = var.stack_name
   administrative    = var.stack_administrative
   autodeploy        = var.stack_autodeploy
@@ -37,6 +38,7 @@ resource spacelift_stack this {
 }
 
 resource spacelift_gcp_service_account this {
+  count        = length(var.stack_id) > 0 ? 0 : 1
   stack_id     = local.stack_id
   token_scopes = var.spacelift_token_scopes
 }
