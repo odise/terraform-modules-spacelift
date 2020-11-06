@@ -62,9 +62,9 @@ module example_stack {
     "${var.name} terraform apply on ${var.main_branch} only" = module.policies.multi_module_repo_apply_on_master
   }
   # this is a global policy that can be attached on multiple stacks
-  spacelift_policies_objects = (
+  spacelift_policies_objects = [
     module.slack_policy.general_channel_access_policy_id
-  )
+  ]
 
   spacelift_stack_environment_variables = {
     TF_VAR_gcp_project_name = {
