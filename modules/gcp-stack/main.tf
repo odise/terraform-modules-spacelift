@@ -14,7 +14,7 @@ data spacelift_stack self {
 }
 
 locals {
-  stack_id = length(var.stack_id) > 0 ? data.spacelift_stack.self.stack_id : spacelift_stack.this.id
+  stack_id = length(var.stack_id) > 0 ? data.spacelift_stack.self[0].stack_id : spacelift_stack.this.id
 }
 
 resource google_project_iam_member this {
