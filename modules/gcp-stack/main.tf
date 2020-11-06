@@ -1,5 +1,13 @@
 provider "spacelift" {}
 
+terraform {
+  required_providers {
+    spacelift = {
+      source = "registry.spacelift.io/spacelift-io/spacelift"
+    }
+  }
+}
+
 resource google_project_iam_member this {
   for_each = toset(var.spacelift_sa_iam_roles)
   project  = var.gcp_project_name
