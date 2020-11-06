@@ -17,6 +17,7 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | gcp\_project\_name | GCP project name | `string` | n/a | yes |
 | spacelift\_policies | n/a | <pre>map(object({<br>    policy      = string<br>    policy_type = string<br>  }))</pre> | `{}` | no |
+| spacelift\_policies\_objects | n/a | `any` | `null` | no |
 | spacelift\_sa\_iam\_roles | n/a | `list` | `[]` | no |
 | spacelift\_stack\_environment\_variables | n/a | <pre>map(object({<br>    value      = string<br>    write_only = string<br>  }))</pre> | `{}` | no |
 | spacelift\_token\_scopes | n/a | `list` | <pre>[<br>  "https://www.googleapis.com/auth/compute",<br>  "https://www.googleapis.com/auth/cloud-platform",<br>  "https://www.googleapis.com/auth/devstorage.full_control",<br>  "https://www.googleapis.com/auth/ndev.clouddns.readwrite",<br>  "https://www.googleapis.com/auth/userinfo.email"<br>]</pre> | no |
