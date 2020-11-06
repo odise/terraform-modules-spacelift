@@ -31,13 +31,6 @@ write {
 EOF
 }
 
-# this is a global policy that can be attached to multiple stacks
-#resource spacelift_policy global_policy {
-#  name = "Slack policy"
-#  body = module.slack_policy.general_channel_access_policy.policy
-#  type = module.slack_policy.general_channel_access_policy.policy_type
-#}
-
 module example_stack {
   source = "../../modules/gcp-stack"
 
