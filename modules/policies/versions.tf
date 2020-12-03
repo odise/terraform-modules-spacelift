@@ -3,10 +3,6 @@ terraform {
     spacelift = {
       source = "spacelift.io/spacelift-io/spacelift"
     }
-    google = {
-      source = "hashicorp/google"
-    }
   }
   required_version = ">= 0.13"
 }
-
