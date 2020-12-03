@@ -4,5 +4,5 @@ terraform {
       source = "spacelift.io/spacelift-io/spacelift"
     }
   }
-  required_version = ">= 0.13"
+  required_version = ">=0.12.26, <0.14"
 }
