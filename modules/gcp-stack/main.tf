@@ -1,13 +1,3 @@
-provider "spacelift" {}
-
-terraform {
-  required_providers {
-    spacelift = {
-      source = "spacelift.io/spacelift-io/spacelift"
-    }
-  }
-}
-
 data spacelift_stack self {
   count    = length(var.stack_id) > 0 ? 1 : 0
   stack_id = var.stack_id
