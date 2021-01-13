@@ -1,10 +1,13 @@
+terraform {
+  required_version = ">=0.12.6, <0.14"
+}
+
 locals {
   terraformrc = <<-EOT
 credentials "reg.suvi.vbg.de" {
   token = "my-little-secret"
 }
 EOT
-
 }
 
 module "terraformrc" {

@@ -1,8 +1,10 @@
 variable "description" {
   default = ""
+  type    = string
 }
 variable "name" {
   default = ""
+  type    = string
 }
 variable "spacelift_project_path" {
   default = "/mnt/workspace/"
