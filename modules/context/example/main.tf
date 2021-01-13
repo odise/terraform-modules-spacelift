@@ -13,6 +13,8 @@ EOT
 module "terraformrc" {
   source = "../"
 
+  spacelift_project_path = ""
+
   description = "Provide .terraformrc as mounted file."
   name        = ".terraformrc"
   #  stack_attachments = [
