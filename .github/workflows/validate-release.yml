@@ -18,7 +18,7 @@ jobs:
 
       - name: Terraform fmt
         id: fmt
-        run: terraform fmt -check -recursive -diff=true stacks
+        run: terraform fmt -check -recursive -diff=true modules
         # continue-on-error: true
 
       # semver version tag
