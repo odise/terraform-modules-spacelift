@@ -4,14 +4,17 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >=0.12.26, <0.14 |
+| terraform | >=0.12.6, <0.14 |
+| google | ~> 3.51.0 |
+| google-beta | ~> 3.51.0 |
+| spacelift | 1.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| google | n/a |
-| spacelift | n/a |
+| google | ~> 3.51.0 |
+| spacelift | 1.0.0 |
 
 ## Inputs
 
@@ -36,6 +39,9 @@
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| gcp\_service\_account\_id | The immutable ID (slug) of the service account attachment. |
+| id | The immutable ID (slug) of the stack |
 
 <!--- END_TF_DOCS --->
