@@ -71,6 +71,7 @@ variable spacelift_policies {
   default = {}
 }
 variable "spacelift_policies_objects" {
+  type    = any
   default = null
 }
 
