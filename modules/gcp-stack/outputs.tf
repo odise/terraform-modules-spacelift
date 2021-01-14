@@ -1,9 +1,9 @@
 output "id" {
-  value       = spacelift_stack.this[0].id
+  value       = length(var.stack_id) > 0 ? "" : spacelift_stack.this[0].id
   description = "The immutable ID (slug) of the stack"
 }
 output "gcp_service_account_id" {
-  value       = spacelift_gcp_service_account.this[0].id
+  value       = length(var.stack_id) > 0 ? "" : spacelift_gcp_service_account.this[0].id
   description = "The immutable ID (slug) of the service account attachment."
 }
 #output "gcp_service_account_email" {
